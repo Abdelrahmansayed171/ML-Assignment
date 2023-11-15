@@ -101,33 +101,36 @@ Y2 = dataset.iloc[:, -1].values
 # ## Train & Test Split
 
 # %%
-X_train, X_test, Y1_train, Y1_test, Y2_train, Y2_test = train_test_split(X, Y1, Y2, test_size=0.2, random_state=1)
+X_train, X_test, Y1_train, Y1_test, Y2_train, Y2_test = train_test_split(X, Y1, Y2, test_size=0.2, random_state=1736)
 
 # %% [markdown]
 # ## Encoding Features
 
 # %%
 
-le = LabelEncoder()
+le1 = LabelEncoder()
+le2 = LabelEncoder()
+le3 = LabelEncoder()
+le4 = LabelEncoder()
 
-X_train[:,0] = np.array(le.fit_transform(X_train[:,0])) # 1/0 -- Male/Female
-X_train[:,1] = np.array(le.fit_transform(X_train[:,1])) # 1/0 Yes/No
-X_train[:,2] = np.array(le.fit_transform(X_train[:,2]))
-X_train[:,3] = np.array(le.fit_transform(X_train[:,3])) # 1/0 Not Graduate/Graduate
+X_train[:,0] = np.array(le1.fit_transform(X_train[:,0])) # 1/0 -- Male/Female
+X_test[:,0] = np.array(le1.transform(X_test[:,0])) # 1/0 -- Male/Female
+X_train[:,1] = np.array(le2.fit_transform(X_train[:,1])) # 1/0 Yes/No
+X_test[:,1] = np.array(le2.transform(X_test[:,1])) # 1/0 Yes/No
+X_train[:,2] = np.array(le3.fit_transform(X_train[:,2]))
+X_test[:,2] = np.array(le3.transform(X_test[:,2])) 
+X_train[:,3] = np.array(le4.fit_transform(X_train[:,3])) # 1/0 Not Graduate/Graduate
+X_test[:,3] = np.array(le4.transform(X_test[:,3])) # 1/0 Not Graduate/Graduate
 # X_train[:,8] = le.fit_transform(X_train[:,8]) # 1/0 Not Graduate/Graduate
 
 
-X_test[:,0] = np.array(le.fit_transform(X_test[:,0])) # 1/0 -- Male/Female
-X_test[:,1] = np.array(le.fit_transform(X_test[:,1])) # 1/0 Yes/No
-X_test[:,2] = np.array(le.fit_transform(X_test[:,2])) 
-X_test[:,3] = np.array(le.fit_transform(X_test[:,3])) # 1/0 Not Graduate/Graduate
 # X_test[:,8] = le.fit_transform(X_test[:,8]) # 1/0 Not Graduate/Graduate
 
 
 # kind of transformation, Encoder algo, idx of column, remainder of columns passthrough without any transformations
 ct = ColumnTransformer( transformers = [('encoder', OneHotEncoder(), [8])], remainder='passthrough') 
 X_train = np.array(ct.fit_transform(X_train)) # fit_transform doesn't return Numpy array 
-X_test = np.array(ct.fit_transform(X_test)) # fit_transform doesn't return Numpy array 
+X_test = np.array(ct.transform(X_test)) # fit_transform doesn't return Numpy array 
 
 
 
@@ -136,7 +139,7 @@ X_test = np.array(ct.fit_transform(X_test)) # fit_transform doesn't return Numpy
 
 # %%
 Y2_train = np.array(le.fit_transform(Y2_train)) # 1/0 Y/N 
-Y2_test = np.array(le.fit_transform(Y2_test)) # 1/0 Y/N
+Y2_test = np.array(le.transform(Y2_test)) # 1/0 Y/N
 
 
 # %% [markdown]
@@ -152,11 +155,12 @@ scaler = StandardScaler()
 
 # Fit and transform the numerical features
 nf_standardized1 = np.array(scaler.fit_transform(nf1))
-nf_standardized2 = np.array(scaler.fit_transform(nf2))
+nf_standardized2 = np.array(scaler.transform(nf2))
 
 # Replace the original numerical features with the standardized ones in X
 X_train[:, 7:10]   = np.array(nf_standardized1)
 X_test[:, 7:10]   = np.array(nf_standardized2)
+X_train
 
 # %% [markdown]
 # ## Linear Regression
@@ -174,6 +178,7 @@ linear_model.fit(X_train, Y1_train)
 
 # %%
 Y_predict  = linear_model.predict(X_test)
+print(Y_predict)
 
 # %% [markdown]
 # ### R-Squared Error Evaluation
@@ -223,7 +228,7 @@ class LogisticRegression():
 # ## Train Logistic Regression Model
 
 # %%
-clf = LogisticRegression(lr=0.15)
+clf = LogisticRegression(lr=0.07)
 clf.fit(X_train,Y2_train)
 y_pred = clf.predict(X_test)
 
@@ -240,7 +245,6 @@ print(acc)
 new_dataset = pd.read_csv('loan_new.csv')
 new_dataset.dropna(inplace=True)
 
-
 # %% [markdown]
 # ## Preprocessing New Data
 
@@ -251,16 +255,13 @@ new_X =  new_dataset.iloc[: , 1: ].values #dataset.iloc[: , [0]].values  pandas 
 # ### Encoding
 
 # %%
-lbl = LabelEncoder()
 
-new_X[:,0] = np.array(le.fit_transform(new_X[:,0])) # 1/0 -- Male/Female
-new_X[:,1] = np.array(le.fit_transform(new_X[:,1])) # 1/0 Yes/No
-new_X[:,2] = np.array(le.fit_transform(new_X[:,2]))
-new_X[:,3] = np.array(le.fit_transform(new_X[:,3])) # 1/0 Not Graduate/Graduate
+new_X[:,0] = np.array(le1.transform(new_X[:,0])) # 1/0 -- Male/Female
+new_X[:,1] = np.array(le2.transform(new_X[:,1])) # 1/0 Yes/No
+new_X[:,2] = np.array(le3.transform(new_X[:,2]))
+new_X[:,3] = np.array(le4.transform(new_X[:,3])) # 1/0 Not Graduate/Graduate
 
-# kind of transformation, Encoder algo, idx of column, remainder of columns passthrough without any transformations
-new_ct = ColumnTransformer( transformers = [('encoder', OneHotEncoder(), [8])], remainder='passthrough') 
-new_X = np.array(new_ct.fit_transform(new_X)) # fit_transform doesn't return Numpy array 
+new_X = np.array(ct.transform(new_X)) # fit_transform doesn't return Numpy array 
 
 # %% [markdown]
 # ### Standardization
@@ -268,11 +269,8 @@ new_X = np.array(new_ct.fit_transform(new_X)) # fit_transform doesn't return Num
 # %%
 new_nf = new_X[:, 7:10]
 
-# Initialize the StandardScaler
-new_scaler = StandardScaler()
-
 # Fit and transform the numerical features
-new_nf_standardized = np.array(new_scaler.fit_transform(new_nf))
+new_nf_standardized = np.array(scaler.transform(new_nf))
 
 # Replace the original numerical features with the standardized ones in X
 new_X[:, 7:10]   = np.array(new_nf_standardized)
@@ -285,8 +283,14 @@ new_X[:, 7:10]   = np.array(new_nf_standardized)
 new_Y2_pred = clf.predict(new_X)
 new_Y1_pred = linear_model.predict(new_X)
 
+# %%
+print(new_Y2_pred)
+
+# %%
+print(new_Y1_pred)
+
 # %% [markdown]
-# # Write Predicted Values on new Excel File
+# # Write Predicted Values on new CSV File
 
 # %%
 df = pd.DataFrame(new_dataset)
