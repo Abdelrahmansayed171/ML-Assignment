@@ -13971,7 +13971,12 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Assignment-1-Abdelrahman-Sayed">Assignment-1 Abdelrahman Sayed<a class="anchor-link" href="#Assignment-1-Abdelrahman-Sayed">&#182;</a></h1>
+<h1 id="Assignment-1">Assignment-1<a class="anchor-link" href="#Assignment-1">&#182;</a></h1>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Abdelrahman-Sayed___20201114">Abdelrahman Sayed<strong>___</strong>20201114<a class="anchor-link" href="#Abdelrahman-Sayed___20201114">&#182;</a></h1><h1 id="Seif-El-Din-Mohamed_20200239">Seif El-Din Mohamed<strong>_</strong>20200239<a class="anchor-link" href="#Seif-El-Din-Mohamed_20200239">&#182;</a></h1><h1 id="Shahd-Fekry-ali_20201101">Shahd Fekry ali<strong><strong>_</strong></strong>20201101<a class="anchor-link" href="#Shahd-Fekry-ali_20201101">&#182;</a></h1><h1 id="Mariam-Alaa-Eldeen__20200525">Mariam Alaa Eldeen<strong>__</strong>20200525<a class="anchor-link" href="#Mariam-Alaa-Eldeen__20200525">&#182;</a></h1><h1 id="Wessam-Fawzy__20201215">Wessam Fawzy<strong><strong><em>__</em></strong></strong>20201215<a class="anchor-link" href="#Wessam-Fawzy__20201215">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14228,11 +14233,6 @@ dtype: float64
 
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Assignment-1-Seif-El-Din-Mohamed">Assignment-1 Seif El Din Mohamed<a class="anchor-link" href="#Assignment-1-Seif-El-Din-Mohamed">&#182;</a></h1>
-</div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14706,8 +14706,9 @@ dtype: int64
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Y2_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Y2_train</span><span class="p">))</span> <span class="c1"># 1/0 Y/N </span>
-<span class="n">Y2_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Y2_test</span><span class="p">))</span> <span class="c1"># 1/0 Y/N</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">le5</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">Y2_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">le5</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Y2_train</span><span class="p">))</span> <span class="c1"># 1/0 Y/N </span>
+<span class="n">Y2_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">le5</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Y2_test</span><span class="p">))</span> <span class="c1"># 1/0 Y/N</span>
 </pre></div>
 
      </div>
